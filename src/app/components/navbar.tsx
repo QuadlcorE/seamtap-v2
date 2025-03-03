@@ -19,7 +19,7 @@ export default function Navbar() {
     <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
       {/* Logo */}
       <div className="flex-shrink-0">
-        <Link href="/">
+        <Link href="/dashboard">
           <div className="h-10 w-10 relative">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 5L30 15L20 25L10 15L20 5Z" stroke="black" strokeWidth="2" fill="white" />
