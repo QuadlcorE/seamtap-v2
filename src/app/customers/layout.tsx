@@ -2,6 +2,8 @@ import React from "react";
 import { Suspense } from "react";
 import CustomersLoading from "./loading";
 import Navbar from "../components/navbar";
+import { title } from "process";
+import { Description } from "@radix-ui/react-dialog";
 
 export default function CustomersLayout({
   children,
@@ -15,3 +17,9 @@ export default function CustomersLayout({
     </div>
   );
 }
+
+export const metadata = {
+  title: "Customers | Customer Management System",
+  description:
+    "View and manage all customers in your Customer Management System",
+};

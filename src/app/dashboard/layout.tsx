@@ -1,15 +1,23 @@
 import React, { Children, Suspense } from "react";
 import Navbar from "../components/navbar";
 import Loading from "./loading";
-
+import { title } from "process";
 
 export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
-      <Navbar />
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <div>
+        <Navbar />
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </div>
     </div>
   );
 }
+
+export const metadata = {
+  title: "Dashboard | Dashboard Management System",
+  description:
+    "View and manage all dashboard in your Dashboard Management System",
+};

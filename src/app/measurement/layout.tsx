@@ -1,18 +1,26 @@
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from "react";
+import Navbar from "../components/navbar";
+import MeasurementsLoading from "./loading";
 
 interface MeasurementsLayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export default function MeasurementsLayout({ children }: MeasurementsLayoutProps) {
+export default function MeasurementsLayout({
+  children,
+}: MeasurementsLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <main className="flex-1">{children}</main>
+    <div>
+      <Navbar />
+      <div className="container mx-auto">
+        <Suspense fallback={<MeasurementsLoading/>}>{children}</Suspense>
+      </div>
     </div>
-  )
+  );
 }
 
 export const metadata = {
-  title: 'Measurements | Measurement Management System',
-  description: 'View and manage all customer measurements in your Measurement Management System',
-}
+  title: "Measurements | Measurement Management System",
+  description:
+    "View and manage all customer measurements in your Measurement Management System",
+};

@@ -1,20 +1,24 @@
-import { ReactNode } from 'react'
-import Navbar from '../components/navbar'
+import { ReactNode, Suspense } from "react";
+import Navbar from "../components/navbar";
+import FamiliesLoading from "./loading";
 
 interface FamiliesLayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export default function FamiliesLayout({ children }: FamiliesLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar/>
-      <main className="flex-1">{children}</main>
+    <div>
+      <Navbar />
+      <div className="container mx-auto">
+        <Suspense fallback={<FamiliesLoading />}>{children}</Suspense>
+      </div>
     </div>
-  )
+  );
 }
 
 export const metadata = {
-  title: 'Families | Measurement Management System',
-  description: 'Manage all your customer families in your Measurement Management System',
-}
+  title: "Families | Measurement Management System",
+  description:
+    "Manage all your customer families in your Measurement Management System",
+};
