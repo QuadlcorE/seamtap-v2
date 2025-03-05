@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CurrentServerUser, CurrentUser } from "@stackframe/stack";
+import Link from "next/link";
 
 type Props = { user: CurrentUser | CurrentServerUser };
 
@@ -30,8 +31,8 @@ export default function AccountSummary({ user }: Props) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full" size="sm">
-          Account Settings
+        <Button asChild variant="outline" className="w-full" size="sm">
+          <Link href="/settings">Account Settings</Link> 
         </Button>
       </CardFooter>
     </Card>

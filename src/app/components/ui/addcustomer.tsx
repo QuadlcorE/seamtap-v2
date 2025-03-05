@@ -24,9 +24,9 @@ import {
 } from "@/components/ui/select";
 import { getFamilies } from "@/lib/serverlogic";
 import { Family, Measurement } from "@prisma/client";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 
-export default function AddCustomer() {
+export default function AddCustomer({variant = "default"}) {
   // State for forms
   const [customerForm, setCustomerForm] = useState({
     user_id: "",
@@ -100,9 +100,16 @@ export default function AddCustomer() {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-full justify-start" size="sm">
+        {variant=="quickaction" ? (<Button variant="outline" className="w-full justify-start" size="sm">
           Add New Customer
-        </Button>
+        </Button>) : (<Button className="flex items-center gap-2">
+          <Plus className="h-4 w-4" />
+          Add New Customer
+        </Button>)}
+
+        {/* <Button variant="outline" className="w-full justify-start" size="sm">
+          Add New Customer
+        </Button> */}
       </DrawerTrigger>
       <DrawerContent className="p-6 space-y-6 max-w-6xl mx-auto">
         <form onSubmit={handleAddCustomer} className="max-w-4xl mx-auto">

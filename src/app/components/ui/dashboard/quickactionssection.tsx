@@ -34,20 +34,7 @@ import AddFamily from "../addfamily";
 import { Toaster } from "@/components/ui/sonner";
 import AddMeasurement from "../addmeasurement";
 
-type Props = {};
-
-export default function QuickActions({}: Props) {
-  
-
-  // Mock customer data for the select input
-  const customers = [
-    { id: "1", name: "John Smith" },
-    { id: "2", name: "Jane Johnson" },
-    { id: "3", name: "Robert Williams" },
-  ];
-
-  
-
+export default function QuickActions() {
   return (
     <Card>
       <CardHeader>
@@ -56,7 +43,7 @@ export default function QuickActions({}: Props) {
       </CardHeader>
       <CardContent className="space-y-2">
         {/* Add New Customer Drawer */}
-        <AddCustomer />
+        <AddCustomer variant="quickaction"/>
         
         {/* Add New Family Drawer */}
         <AddFamily />

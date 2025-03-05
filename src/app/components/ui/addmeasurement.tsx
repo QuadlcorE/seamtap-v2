@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getCustomers, getCustomersNoMeasurement, getFamilies } from "@/lib/serverlogic";
+import { getCustomersNoMeasurement } from "@/lib/serverlogic";
 import { Customer } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
