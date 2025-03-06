@@ -1,41 +1,70 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ArrowLeft, MoreHorizontal, Plus, Pencil, Trash2 } from 'lucide-react';
+"use client";
 
-const CustomerDetailsPage = () => {
-  // Mock customer data
-  const customer = {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    family: 'Smith Family',
-    accountType: 'Family',
-    createdAt: '2023-10-01',
-    measurements: [
-      { id: 1, type: 'Chest', value: '40.5', notes: '-', createdAt: '2023-10-02' },
-      { id: 2, type: 'Waist', value: '32.0', notes: '-', createdAt: '2023-10-02' },
-      { id: 3, type: 'Hips', value: '38.5', notes: 'Measured twice for accuracy', createdAt: '2023-10-02' },
-      { id: 4, type: 'Inseam', value: '30.0', notes: '-', createdAt: '2023-10-02' },
-      { id: 5, type: 'Shoulder Width', value: '18.5', notes: 'Client preferred a looser fit', createdAt: '2023-10-05' }
-    ]
-  };
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ArrowLeft, MoreHorizontal, Trash2 } from "lucide-react";
+import AddMeasurement from "../addmeasurement";
+import Link from "next/link";
+import { DeleteCustomerDialog } from "../delete";
+import { useRouter } from "next/navigation";
 
+type Measurement = {
+  id: number;
+  type: string;
+  value: string;
+  notes: string;
+  createdAt: string;
+};
+
+type CustomerProps = {
+  id: number;
+  name: string;
+  email: string;
+  family: string;
+  accountType: string;
+  createdAt: string;
+  measurements: Measurement[];
+};
+
+const CustomerDetailsPage = ({ customer }: { customer: CustomerProps }) => {
+  const router = useRouter();
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       <div className="flex items-center mb-4">
-        <Button variant="ghost" size="sm" className="mr-2">
-          <ArrowLeft className="h-4 w-4 mr-1" />
-          Back to Customers
-        </Button>
+        <Link href="/customers">
+          <Button variant="ghost" size="sm" className="mr-2">
+            <ArrowLeft className="h-4 w-4 mr-1" />
+            Back to Customers
+          </Button>
+        </Link>
       </div>
 
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Customer Details: {customer.name}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Customer Details: {customer.name}
+        </h1>
       </div>
 
       <Card>
@@ -49,20 +78,8 @@ const CustomerDetailsPage = () => {
               <dd className="mt-1 text-sm">{customer.name}</dd>
             </div>
             <div>
-              <dt className="text-sm font-medium text-gray-500">Email</dt>
-              <dd className="mt-1 text-sm">{customer.email}</dd>
-            </div>
-            <div>
               <dt className="text-sm font-medium text-gray-500">Family</dt>
               <dd className="mt-1 text-sm">{customer.family}</dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-gray-500">Account Type</dt>
-              <dd className="mt-1 text-sm">
-                <Badge variant={customer.accountType === 'Family' ? 'default' : 'secondary'}>
-                  {customer.accountType}
-                </Badge>
-              </dd>
             </div>
             <div>
               <dt className="text-sm font-medium text-gray-500">Created At</dt>
@@ -71,14 +88,19 @@ const CustomerDetailsPage = () => {
           </dl>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
-          <Button variant="outline" className="flex items-center gap-1">
+          {/* <Button variant="outline" className="flex items-center gap-1">
             <Pencil className="h-4 w-4" />
             Edit Customer
-          </Button>
-          <Button variant="destructive" className="flex items-center gap-1">
-            <Trash2 className="h-4 w-4" />
-            Delete Customer
-          </Button>
+          </Button> */}
+          
+          <DeleteCustomerDialog
+            customerId={customer.id}
+            customerName={customer.name}
+            onDeleteSuccess={() => {
+              // Refresh customer list or navigate away
+              router.push("/customers");
+            }}
+          />
         </CardFooter>
       </Card>
 
@@ -86,12 +108,11 @@ const CustomerDetailsPage = () => {
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Measurements</CardTitle>
-            <CardDescription>All recorded measurements for this customer</CardDescription>
+            <CardDescription>
+              All recorded measurements for this customer
+            </CardDescription>
           </div>
-          <Button className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Add Measurement
-          </Button>
+          <AddMeasurement />
         </CardHeader>
         <CardContent>
           <Table>
@@ -107,7 +128,9 @@ const CustomerDetailsPage = () => {
             <TableBody>
               {customer.measurements.map((measurement) => (
                 <TableRow key={measurement.id}>
-                  <TableCell className="font-medium">{measurement.type}</TableCell>
+                  <TableCell className="font-medium">
+                    {measurement.type}
+                  </TableCell>
                   <TableCell>{measurement.value}</TableCell>
                   <TableCell>{measurement.notes}</TableCell>
                   <TableCell>{measurement.createdAt}</TableCell>
@@ -121,7 +144,9 @@ const CustomerDetailsPage = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>Edit Measurement</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">Delete Measurement</DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600">
+                          Delete Measurement
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

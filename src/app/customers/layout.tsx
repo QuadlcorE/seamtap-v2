@@ -2,8 +2,6 @@ import React from "react";
 import { Suspense } from "react";
 import CustomersLoading from "./loading";
 import Navbar from "../components/navbar";
-import { title } from "process";
-import { Description } from "@radix-ui/react-dialog";
 
 export default function CustomersLayout({
   children,

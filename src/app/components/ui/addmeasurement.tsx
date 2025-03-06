@@ -25,11 +25,9 @@ import {
 import { getCustomersNoMeasurement } from "@/lib/serverlogic";
 import { Customer } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 
-type Props = {};
-
-export default function AddMeasurement({}: Props) {
+export default function AddMeasurement({ variant = "default" }) {
   // State for forms
   const [measurementForm, setMeasurementForm] = useState({
     customer_id: "",
@@ -84,7 +82,7 @@ export default function AddMeasurement({}: Props) {
         : null,
       notes: measurementForm.notes ? parseFloat(measurementForm.notes) : null,
     };
-    console.log(dataToSubmit.customer_id)
+    console.log(dataToSubmit.customer_id);
 
     try {
       const response = await fetch("/api/addMeasurement", {
@@ -101,7 +99,7 @@ export default function AddMeasurement({}: Props) {
           notes: dataToSubmit.notes,
         }),
       });
-      console.log("customerID", dataToSubmit)
+      console.log("customerID", dataToSubmit);
 
       const data = await response.json();
 
@@ -135,9 +133,16 @@ export default function AddMeasurement({}: Props) {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button className="w-full justify-start" variant="outline" size="sm">
-          Record Measurement
-        </Button>
+        {variant == "quickaction" ? (
+          <Button className="w-full justify-start" variant="outline" size="sm">
+            Record Measurement
+          </Button>
+        ) : (
+          <Button size="sm" className="flex items-center gap-1">
+            <Plus className="h-4 w-4" />
+            Add measurement
+          </Button>
+        )}
       </DrawerTrigger>
       <DrawerContent className="p-6 space-y-6 max-w-6xl mx-auto">
         <form onSubmit={handleRecordMeasurement} className="max-w-4xl mx-auto">

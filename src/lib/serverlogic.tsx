@@ -18,6 +18,18 @@ export async function getCustomers() {
   return customers;
 }
 
+export async function getCustomerByID(customer_id: number) {
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return null;
+  }
+  const customers = await prisma.customer.findUnique({
+    where: { user_id: user.id, customer_id: customer_id },
+    include: { measurements: true },
+  });
+  return customers;
+}
+
 export async function getCustomersByFamilyID(family_id: number) {
   const user = await stackServerApp.getUser();
   if (!user) {
@@ -70,4 +82,19 @@ export async function getFamilyNameByID(family_id: number) {
     },
   });
   return family;
+}
+
+export async function deleteCustomer(customer_id: number) {
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return null;
+  }
+  const measurements = await prisma.measurement.deleteMany({
+    where: { customer_id: customer_id },
+  });
+  const customer = await prisma.customer.delete({
+    where: { customer_id: customer_id },
+  });
+
+  return [measurements, customer];
 }

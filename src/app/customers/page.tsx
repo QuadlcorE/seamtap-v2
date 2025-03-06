@@ -34,6 +34,8 @@ import {
   getFamilies,
 } from "@/lib/serverlogic";
 import { toast } from "sonner";
+import { DeleteCustomer } from "../components/ui/customers/deletecustomer";
+import Link from "next/link";
 
 export default function CustomersPage() {
   // States to manage customers
@@ -45,6 +47,10 @@ export default function CustomersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] =
     useState<Customer[]>(customers);
+
+  // State for drawer
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<number>(0);
 
   // Fetch customers when the component mounts
   useEffect(() => {
@@ -249,9 +255,19 @@ export default function CustomersPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>View Details</DropdownMenuItem>
-                          <DropdownMenuItem>Edit Customer</DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">
+                          <DropdownMenuItem asChild>
+                            <Link href={`/customers/${customer.customer_id}`}>
+                              View Details
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-red-600"
+                            onSelect={(e) => {
+                              e.preventDefault(); // Prevent dropdown from closing
+                              setIsDialogOpen(true);
+                              setSelectedCustomer(customer.customer_id);
+                            }}
+                          >
                             Delete Customer
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -264,6 +280,29 @@ export default function CustomersPage() {
           )}
         </CardContent>
       </Card>
+      {/* Custom wrapper to control ViewCustomer's open state */}
+      <ViewCustomerWrapper
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        customer_id={selectedCustomer}
+      />
     </div>
   );
+}
+
+// Wrapper component to pass open state to ViewCustomer
+function ViewCustomerWrapper({
+  open,
+  onOpenChange,
+  customer_id,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  customer_id: number;
+}) {
+  // Clone the ViewCustomer to inject open state
+  return React.cloneElement(<DeleteCustomer customer_id={customer_id} />, {
+    open,
+    onOpenChange,
+  });
 }

@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getFamilies } from "@/lib/serverlogic";
-import { Family, Measurement } from "@prisma/client";
+import { Family } from "@prisma/client";
 import { Loader2, Plus } from "lucide-react";
 
 export default function AddCustomer({variant = "default"}) {
