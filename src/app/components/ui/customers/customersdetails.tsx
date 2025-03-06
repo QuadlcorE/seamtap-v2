@@ -24,7 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, MoreHorizontal, Trash2 } from "lucide-react";
+import { ArrowLeft, MoreHorizontal } from "lucide-react";
 import AddMeasurement from "../addmeasurement";
 import Link from "next/link";
 import { DeleteCustomerDialog } from "../delete";
@@ -92,7 +92,7 @@ const CustomerDetailsPage = ({ customer }: { customer: CustomerProps }) => {
             <Pencil className="h-4 w-4" />
             Edit Customer
           </Button> */}
-          
+
           <DeleteCustomerDialog
             customerId={customer.id}
             customerName={customer.name}

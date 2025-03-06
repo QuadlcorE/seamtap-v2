@@ -4,9 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type Props = {};
-
-export default function QuickLinks({}: Props) {
+export default function QuickLinks() {
   return (
     <Card>
       <CardHeader>

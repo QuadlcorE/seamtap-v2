@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -15,15 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { getFamilies } from "@/lib/serverlogic";
-import { Family } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 
 export default function AddFamily() {
@@ -36,7 +27,7 @@ export default function AddFamily() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Hidden button to trigger closing the drawer
-    const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Function to handle form submission
   const handleAddFamily = async (e: React.FormEvent) => {
@@ -44,32 +35,33 @@ export default function AddFamily() {
     setIsSubmitting(true);
 
     try {
-        const response = await fetch("/api/addFamily", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(
-                {name: familyForm.family_name,}
-            ),
-        });
+      const response = await fetch("/api/addFamily", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: familyForm.family_name }),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.error || "Failed to add family");
-        }
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to add family");
+      }
 
-        toast.success("Family added successfully", {duration: 5000, position: "top-center"} );
-        setFamilyForm({ family_name: "" });
+      toast.success("Family added successfully", {
+        duration: 5000,
+        position: "top-center",
+      });
+      setFamilyForm({ family_name: "" });
 
-        // Programmatically close the drawer
-        closeButtonRef.current?.click();
+      // Programmatically close the drawer
+      closeButtonRef.current?.click();
     } catch (error) {
-        console.error("Error adding family:", error);
-        toast.error( "Failed to add family");
+      console.error("Error adding family:", error);
+      toast.error("Failed to add family");
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -107,11 +99,19 @@ export default function AddFamily() {
           </div>
           <DrawerFooter>
             <Button type="submit">
-                {isSubmitting ? (<><Loader2 className="animate-spin mr-2"/> Submitting...</>) : "Add Family"}
-                </Button>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="animate-spin mr-2" /> Submitting...
+                </>
+              ) : (
+                "Add Family"
+              )}
+            </Button>
             <DrawerClose asChild>
-            <div>
-                <Button className="w-full" variant="outline">Cancel</Button>
+              <div>
+                <Button className="w-full" variant="outline">
+                  Cancel
+                </Button>
                 <button
                   className="hidden"
                   ref={closeButtonRef}

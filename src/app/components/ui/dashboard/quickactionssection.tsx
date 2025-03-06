@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,27 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import AddCustomer from "../addcustomer";
 import AddFamily from "../addfamily";
 import { Toaster } from "@/components/ui/sonner";
@@ -43,12 +21,12 @@ export default function QuickActions() {
       </CardHeader>
       <CardContent className="space-y-2">
         {/* Add New Customer Drawer */}
-        <AddCustomer variant="quickaction"/>
-        
+        <AddCustomer variant="quickaction" />
+
         {/* Add New Family Drawer */}
         <AddFamily />
         {/* Record Measurement Drawer */}
-        <AddMeasurement/>
+        <AddMeasurement />
       </CardContent>
       <Toaster />
     </Card>

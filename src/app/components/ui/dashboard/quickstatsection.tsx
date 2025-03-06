@@ -4,9 +4,9 @@ import {Users, Home, Gauge} from 'lucide-react'
 import { CurrentServerUser } from '@stackframe/stack'
 import prisma from '@/lib/prisma'
 
-type Props = { user: CurrentServerUser, stats: {customers: number, families: number, measurements: number}}
+type Props = { user: CurrentServerUser}
 
-export default async function Quickstats({user, stats}: Props) {
+export default async function Quickstats({user}: Props) {
   const customersCount = await prisma.customer.count({
     where: { user_id: user.id }
   })
