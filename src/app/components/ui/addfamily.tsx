@@ -16,12 +16,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function AddFamily() {
   // State for forms
   const [familyForm, setFamilyForm] = useState({
     family_name: "",
   });
+
+  const router = useRouter();
 
   // State to handle submission loading
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +59,8 @@ export default function AddFamily() {
       setFamilyForm({ family_name: "" });
 
       // Programmatically close the drawer
-      closeButtonRef.current?.click();
+      // closeButtonRef.current?.click();
+            router.push('/dashboard');
     } catch (error) {
       console.error("Error adding family:", error);
       toast.error("Failed to add family");

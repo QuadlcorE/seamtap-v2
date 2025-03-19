@@ -25,14 +25,17 @@ import {
 import { getFamilies } from "@/lib/serverlogic";
 import { Family } from "@prisma/client";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export default function AddCustomer({variant = "default"}) {
+export default function AddCustomer({ variant = "default" }) {
   // State for forms
   const [customerForm, setCustomerForm] = useState({
     user_id: "",
     name: "",
     family_id: "",
   });
+
+  const router = useRouter();
 
   // State to store families
   const [families, setFamilies] = useState<Family[]>([]);
@@ -84,11 +87,16 @@ export default function AddCustomer({variant = "default"}) {
         throw new Error(data.error || "Failed to add customer");
       }
 
-      toast.success("Customer added successfully", { duration: 5000, position: "top-center" });
+      toast.success("Customer added successfully", {
+        duration: 5000,
+        position: "top-center",
+      });
       setCustomerForm({ user_id: "", name: "", family_id: "" });
 
       // Programmatically close the drawer
-      closeButtonRef.current?.click();
+      // closeButtonRef.current?.click();
+
+      router.push('/dashboard');
     } catch (error) {
       console.error("Error adding customer:", error);
       toast.error("Failed to add customer");
@@ -100,31 +108,35 @@ export default function AddCustomer({variant = "default"}) {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        {variant=="quickaction" ? (<Button variant="outline" className="w-full justify-start" size="sm">
-          Add New Customer
-        </Button>) : (<Button className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Add New Customer
-        </Button>)}
+        {variant == "quickaction" ? (
+          <Button variant='outline' className='w-full justify-start' size='sm'>
+            Add New Customer
+          </Button>
+        ) : (
+          <Button className='flex items-center gap-2'>
+            <Plus className='h-4 w-4' />
+            Add New Customer
+          </Button>
+        )}
 
         {/* <Button variant="outline" className="w-full justify-start" size="sm">
           Add New Customer
         </Button> */}
       </DrawerTrigger>
-      <DrawerContent className="p-6 space-y-6 max-w-6xl mx-auto">
-        <form onSubmit={handleAddCustomer} className="max-w-4xl mx-auto">
+      <DrawerContent className='p-6 space-y-6 max-w-6xl mx-auto'>
+        <form onSubmit={handleAddCustomer} className='max-w-4xl mx-auto'>
           <DrawerHeader>
             <DrawerTitle>Add New Customer</DrawerTitle>
             <DrawerDescription>
               Create a new customer record in the system.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-4 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="customer-name">Name *</Label>
+          <div className='p-4 space-y-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='customer-name'>Name *</Label>
               <Input
-                id="customer-name"
-                placeholder="Enter customer name"
+                id='customer-name'
+                placeholder='Enter customer name'
                 value={customerForm.name}
                 onChange={(e) =>
                   setCustomerForm({ ...customerForm, name: e.target.value })
@@ -132,15 +144,15 @@ export default function AddCustomer({variant = "default"}) {
                 required
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="customer-family">Family (Optional)</Label>
+            <div className='space-y-2'>
+              <Label htmlFor='customer-family'>Family (Optional)</Label>
               <Select
                 value={customerForm.family_id}
                 onValueChange={(value) =>
                   setCustomerForm({ ...customerForm, family_id: value })
                 }
               >
-                <SelectTrigger id="customer-family">
+                <SelectTrigger id='customer-family'>
                   <SelectValue
                     placeholder={
                       loading ? "Loading families..." : "Select a family"
@@ -158,7 +170,7 @@ export default function AddCustomer({variant = "default"}) {
                       </SelectItem>
                     ))
                   ) : (
-                    <SelectItem value="no-families" disabled>
+                    <SelectItem value='no-families' disabled>
                       {loading ? "Loading..." : "No families available"}
                     </SelectItem>
                   )}
@@ -167,17 +179,26 @@ export default function AddCustomer({variant = "default"}) {
             </div>
           </div>
           <DrawerFooter>
-            <Button type="submit">
-              {isSubmitting ? (<> <Loader2 className="animate-spin mr-2"/> Submitting...</>) : "Add Customer"}
-              </Button>
+            <Button type='submit'>
+              {isSubmitting ? (
+                <>
+                  {" "}
+                  <Loader2 className='animate-spin mr-2' /> Submitting...
+                </>
+              ) : (
+                "Add Customer"
+              )}
+            </Button>
             <DrawerClose asChild>
               <div>
-                <Button className="w-full" variant="outline">Cancel</Button>
+                <Button className='w-full' variant='outline'>
+                  Cancel
+                </Button>
                 <button
-                  className="hidden"
+                  className='hidden'
                   ref={closeButtonRef}
-                  type="button"
-                  aria-hidden="true"
+                  type='button'
+                  aria-hidden='true'
                 />
               </div>
             </DrawerClose>

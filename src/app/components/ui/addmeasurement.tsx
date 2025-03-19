@@ -26,6 +26,8 @@ import { getCustomersNoMeasurement } from "@/lib/serverlogic";
 import { Customer } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 
 export default function AddMeasurement({ variant = "default" }) {
   // State for forms
@@ -37,6 +39,9 @@ export default function AddMeasurement({ variant = "default" }) {
     inseam: "",
     notes: "",
   });
+
+  const router = useRouter();
+  
 
   // State to store customers
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -121,7 +126,8 @@ export default function AddMeasurement({ variant = "default" }) {
       });
 
       // Programmatically close the drawer
-      closeButtonRef.current?.click();
+      // closeButtonRef.current?.click();
+      router.push("/dashboard");
     } catch (error) {
       console.error("Error adding measurement:", error);
       toast.error("Failed to add measurement");
