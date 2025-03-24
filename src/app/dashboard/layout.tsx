@@ -1,7 +1,6 @@
-import React, { Children, Suspense } from "react";
+import React, { Suspense } from "react";
 import Navbar from "../components/navbar";
 import Loading from "./loading";
-import { title } from "process";
 
 export default function Layout({
   children,

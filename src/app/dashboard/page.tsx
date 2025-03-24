@@ -16,29 +16,18 @@ async function Dashboard() {
   //   accountType: "Family",
   // };
 
-  const stats = {
-    customers: 124,
-    families: 42,
-    measurements: 567,
-  };
-
-  const recentActivity = [
-    { type: "customer", name: "Sarah Parker", date: "Feb 28, 2025" },
-    { type: "measurement", name: "Michael Wong", date: "Feb 27, 2025" },
-    { type: "family", name: "Rodriguez Family", date: "Feb 25, 2025" },
-  ];
-
-  const reminders = [
-    { customer: "Emma Davis", lastUpdate: "Sep 2, 2024" },
-    { customer: "James Wilson", lastUpdate: "Aug 15, 2024" },
-  ];
+  // const stats = {
+  //   customers: 124,
+  //   families: 42,
+  //   measurements: 567,
+  // };
 
   return (
     <div className="p-6 space-y-6 max-w-6xl mx-auto">
       <WelcomeSection name={user.displayName!}/>
 
       {/* Quick Stats */}
-      <Quickstats user={user} stats={stats} />
+      <Quickstats user={user} />
 
       {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

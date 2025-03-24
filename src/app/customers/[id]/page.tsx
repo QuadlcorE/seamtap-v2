@@ -2,19 +2,21 @@ import CustomerDetailsPage from "@/app/components/ui/customers/customersdetails"
 import { getCustomerByID } from "@/lib/serverlogic";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const resolvedParams = await params;
+// Define the props type explicitly
+interface PageProps {
+  params: Promise<{ id: string }>; // Wrap params in a Promise
+}
+
+export default async function Page({ params }: PageProps) {
+  const resolvedParams = await params; // Await the Promise
   const customerId = parseInt(resolvedParams.id);
 
-  // Validate that the ID is a number
+  // Validate ID and proceed with your logic
   if (isNaN(customerId)) {
     return notFound();
   }
 
-  // Fetch customer data using the provided function
   const customer = await getCustomerByID(customerId);
-
-  // Check if customer exists
   if (!customer) {
     return notFound();
   }
@@ -24,12 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
     .map(
       (measurement: {
         measurement_id: number;
-        chest: number | null; // Changed to allow null
-        notes?: string | null; // Changed to allow null
+        chest: number | null;
+        notes?: string | null;
         created_at: Date;
-        waist: number | null; // Changed to allow null
-        hips: number | null; // Changed to allow null
-        inseam: number | null; // Changed to allow null
+        waist: number | null;
+        hips: number | null;
+        inseam: number | null;
       }) => {
         return [
           {
@@ -40,27 +42,27 @@ export default async function Page({ params }: { params: { id: string } }) {
             createdAt: measurement.created_at.toISOString().split("T")[0],
           },
           {
-            id: measurement.measurement_id + 1000, // Using offset to create unique IDs
+            id: measurement.measurement_id + 1000,
             type: "Waist",
             value: measurement.waist ? measurement.waist.toString() : "-",
             notes: measurement.notes || "-",
             createdAt: measurement.created_at.toISOString().split("T")[0],
           },
           {
-            id: measurement.measurement_id + 2000, // Using offset to create unique IDs
+            id: measurement.measurement_id + 2000,
             type: "Hips",
             value: measurement.hips ? measurement.hips.toString() : "-",
             notes: measurement.notes || "-",
             createdAt: measurement.created_at.toISOString().split("T")[0],
           },
           {
-            id: measurement.measurement_id + 3000, // Using offset to create unique IDs
+            id: measurement.measurement_id + 3000,
             type: "Inseam",
             value: measurement.inseam ? measurement.inseam.toString() : "-",
             notes: measurement.notes || "-",
             createdAt: measurement.created_at.toISOString().split("T")[0],
           },
-        ].filter((item) => item.value !== "-"); // Filter out measurements that don't have values
+        ].filter((item) => item.value !== "-");
       }
     )
     .flat();
@@ -105,10 +107,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     id: customer.customer_id,
     name: customer.name,
     email: "", // Not in the schema but required by the component
-    family: customer.family_id ? "Family" : "Individual", // Updated to use family_id for checking
-    accountType: customer.family_id ? "Family" : "Individual", // Updated to use family_id for checking
+    family: customer.family_id ? "Family" : "Individual",
+    accountType: customer.family_id ? "Family" : "Individual",
     createdAt: customer.created_at.toISOString().split("T")[0],
-    measurements: formattedFirstMeasurement, // Using only the first measurement as requested
+    measurements: formattedFirstMeasurement,
   };
 
   return <CustomerDetailsPage customer={formattedCustomer} />;

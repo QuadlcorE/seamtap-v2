@@ -76,64 +76,74 @@ export default function MeasurementsPage() {
   })
 
   return (
-    <div className="container mx-auto py-6">
+    <div className='container mx-auto py-6'>
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className='flex items-center justify-between'>
             <div>
-              <CardTitle className="text-2xl">Measurements</CardTitle>
+              <CardTitle className='text-2xl'>Measurements</CardTitle>
               <CardDescription>
-                View and manage all measurements here. Add new measurements, filter by customer or type, and analyze trends.
+                View and manage all measurements here. Add new measurements,
+                filter by customer or type, and analyze trends.
               </CardDescription>
             </div>
-            <Button className="ml-auto" asChild>
-              <Link href="/measurements/new">
-                <Plus className="mr-2 h-4 w-4" /> Add New Measurement
+            <Button className='ml-auto' asChild>
+              <Link href='/measurements/new'>
+                <Plus className='mr-2 h-4 w-4' /> Add New Measurement
               </Link>
             </Button>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col space-y-4">
-            <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <div className='flex flex-col space-y-4'>
+            <div className='flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2'>
+              <div className='relative flex-1'>
+                <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
                 <Input
-                  placeholder="Search measurements..."
-                  className="pl-8"
+                  placeholder='Search measurements...'
+                  className='pl-8'
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Select value={customerFilter} onValueChange={setCustomerFilter}>
-                  <SelectTrigger className="w-32 sm:w-40">
-                    <SelectValue placeholder="Customer" />
+              <div className='flex flex-wrap gap-2'>
+                <Select
+                  value={customerFilter}
+                  onValueChange={setCustomerFilter}
+                >
+                  <SelectTrigger className='w-32 sm:w-40'>
+                    <SelectValue placeholder='Customer' />
                   </SelectTrigger>
                   <SelectContent>
-                    {customers.map(customer => (
-                      <SelectItem key={customer} value={customer}>{customer}</SelectItem>
+                    {customers.map((customer) => (
+                      <SelectItem key={customer} value={customer}>
+                        {customer}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger className="w-32 sm:w-40">
-                    <SelectValue placeholder="Type" />
+                  <SelectTrigger className='w-32 sm:w-40'>
+                    <SelectValue placeholder='Type' />
                   </SelectTrigger>
                   <SelectContent>
-                    {measurementTypes.map(type => (
-                      <SelectItem key={type} value={type}>{type}</SelectItem>
+                    {measurementTypes.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <Select value={dateFilter} onValueChange={setDateFilter}>
-                  <SelectTrigger className="w-32 sm:w-40">
-                    <Calendar className="mr-2 h-4 w-4" />
-                    <SelectValue placeholder="Date Range" />
+                  <SelectTrigger className='w-32 sm:w-40'>
+                    <Calendar className='mr-2 h-4 w-4' />
+                    <SelectValue placeholder='Date Range' />
                   </SelectTrigger>
                   <SelectContent>
-                    {dateRanges.map(range => (
-                      <SelectItem key={range} value={range}>{range}</SelectItem>
+                    {dateRanges.map((range) => (
+                      <SelectItem key={range} value={range}>
+                        {range}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -142,7 +152,7 @@ export default function MeasurementsPage() {
 
             {filteredMeasurements.length > 0 ? (
               <>
-                <div className="rounded-md border">
+                <div className='rounded-md border'>
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -151,52 +161,74 @@ export default function MeasurementsPage() {
                         <TableHead>Value</TableHead>
                         <TableHead>Notes</TableHead>
                         <TableHead>Created At</TableHead>
-                        <TableHead className="w-[100px]">Actions</TableHead>
+                        <TableHead className='w-[100px]'>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredMeasurements.map((measurement) => (
                         <TableRow key={measurement.id}>
-                          <TableCell className="font-medium">
-                            <Link href={`/customers/${measurement.id.split('-')[0]}`} className="hover:underline">
+                          <TableCell className='font-medium'>
+                            <Link
+                              href={`/customers/${
+                                measurement.id.split("-")[0]
+                              }`}
+                              className='hover:underline'
+                            >
                               {measurement.customerName}
                             </Link>
                           </TableCell>
                           <TableCell>{measurement.type}</TableCell>
                           <TableCell>{measurement.value}</TableCell>
-                          <TableCell>{measurement.notes || '-'}</TableCell>
+                          <TableCell>{measurement.notes || "-"}</TableCell>
                           <TableCell>{measurement.createdAt}</TableCell>
                           <TableCell>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                  <span className="sr-only">Open menu</span>
-                                  <MoreHorizontal className="h-4 w-4" />
+                                <Button variant='ghost' className='h-8 w-8 p-0'>
+                                  <span className='sr-only'>Open menu</span>
+                                  <MoreHorizontal className='h-4 w-4' />
                                 </Button>
                               </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
+                              <DropdownMenuContent align='end'>
                                 <DropdownMenuItem asChild>
-                                  <Link href={`/measurements/${measurement.id}`}>View</Link>
+                                  <Link
+                                    href={`/measurements/${measurement.id}`}
+                                  >
+                                    View
+                                  </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                  <Link href={`/measurements/${measurement.id}/edit`}>Edit</Link>
+                                  <Link
+                                    href={`/measurements/${measurement.id}/edit`}
+                                  >
+                                    Edit
+                                  </Link>
                                 </DropdownMenuItem>
                                 <AlertDialog>
                                   <AlertDialogTrigger asChild>
-                                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <DropdownMenuItem
+                                      onSelect={(e) => e.preventDefault()}
+                                    >
                                       Delete
                                     </DropdownMenuItem>
                                   </AlertDialogTrigger>
                                   <AlertDialogContent>
                                     <AlertDialogHeader>
-                                      <AlertDialogTitle>Delete Measurement</AlertDialogTitle>
+                                      <AlertDialogTitle>
+                                        Delete Measurement
+                                      </AlertDialogTitle>
                                       <AlertDialogDescription>
-                                        Are you sure you want to delete this measurement for {measurement.customerName}? This action cannot be undone.
+                                        Are you sure you want to delete this
+                                        measurement for{" "}
+                                        {measurement.customerName}? This action
+                                        cannot be undone.
                                       </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction className="bg-destructive text-destructive-foreground">
+                                      <AlertDialogCancel>
+                                        Cancel
+                                      </AlertDialogCancel>
+                                      <AlertDialogAction className='bg-destructive text-destructive-foreground'>
                                         Delete
                                       </AlertDialogAction>
                                     </AlertDialogFooter>
@@ -210,15 +242,16 @@ export default function MeasurementsPage() {
                     </TableBody>
                   </Table>
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  Showing {filteredMeasurements.length} of {mockMeasurements.length} measurements
+                <div className='text-sm text-muted-foreground'>
+                  Showing {filteredMeasurements.length} of{" "}
+                  {mockMeasurements.length} measurements
                 </div>
               </>
             ) : (
-              <div className="flex h-36 flex-col items-center justify-center rounded-md border border-dashed p-8 text-center">
-                <h3 className="font-medium">No measurements found</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Click 'Add New Measurement' to get started.
+              <div className='flex h-36 flex-col items-center justify-center rounded-md border border-dashed p-8 text-center'>
+                <h3 className='font-medium'>No measurements found</h3>
+                <p className='text-sm text-muted-foreground mt-1'>
+                  Click &apos;Add New Measurement&apos; to get started.
                 </p>
               </div>
             )}
@@ -226,5 +259,5 @@ export default function MeasurementsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

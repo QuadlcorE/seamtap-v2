@@ -1,30 +1,32 @@
-import Navbar from '@/app/components/navbar'
-import { ReactNode } from 'react'
+import Navbar from "@/app/components/navbar";
+import { ReactNode } from "react";
 
 interface FamilyDetailsLayoutProps {
-  children: ReactNode
-  params: { id: string }
+  children: ReactNode;
+  params: Promise<{ familyID: string }>; // Match route segment name
 }
 
-export default function FamilyDetailsLayout({ 
+export default async function FamilyDetailsLayout({
   children,
-  params 
+  // params,
 }: FamilyDetailsLayoutProps) {
+  // const resolvedParams = await params; // Await the Promise
+  // You can use resolvedParams.familyID here if needed
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar/>
-      <main className="flex-1">{children}</main>
+    <div className='flex min-h-screen flex-col'>
+      <Navbar />
+      <main className='flex-1'>{children}</main>
     </div>
-  )
+  );
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  // In a real app, you would fetch the family name here
-  // For demo purposes, we're using a placeholder
-  const familyName = "Family Details" // Replace with API call to get family name
-  
+export async function generateMetadata() {
+  // const resolvedParams = await params;
+  const familyName = "Family Details"; // Replace with API call using resolvedParams.familyID
+
   return {
     title: `${familyName} | Measurement Management System`,
-    description: 'View and manage family details and members',
-  }
+    description: "View and manage family details and members",
+  };
 }
