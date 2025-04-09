@@ -7,10 +7,10 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-// import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-// import { Separator } from "@/components/ui/separator"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { Separator } from "@/components/ui/separator"
 import Navbar from "../components/navbar"
 
 export default function SettingsPage() {
@@ -34,9 +34,9 @@ export default function SettingsPage() {
       <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="account">Account</TabsTrigger>
-          {/* <TabsTrigger value="security">Security</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
-          <TabsTrigger value="danger">Danger Zone</TabsTrigger> */}
+          <TabsTrigger value="danger">Danger Zone</TabsTrigger>
         </TabsList>
 
         <TabsContent value="account" className="mt-6">
@@ -48,13 +48,13 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+              <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                 <Avatar className="h-24 w-24">
                   <AvatarImage src={user.profilePicture || ""} />
                   <AvatarFallback className="text-xl">{user.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                 </Avatar>
                 <Button variant="outline">Upload Picture</Button>
-              </div> */}
+              </div>
 
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -80,7 +80,7 @@ export default function SettingsPage() {
                     className="col-span-3"
                   />
                 </div>
-                {/* <div className="grid grid-cols-4 items-center gap-4">
+                <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="account-type" className="text-right">
                     Account Type
                   </Label>
@@ -96,7 +96,7 @@ export default function SettingsPage() {
                       <SelectItem value="individual">Individual</SelectItem>
                     </SelectContent>
                   </Select>
-                </div> */}
+                </div>
               </div>
             </CardContent>
             <CardFooter>
@@ -105,7 +105,7 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
 
-        {/* <TabsContent value="security" className="mt-6">
+        <TabsContent value="security" className="mt-6">
           <Card>
             <CardHeader>
               <CardTitle>Security</CardTitle>
@@ -285,7 +285,7 @@ export default function SettingsPage() {
               </AlertDialog>
             </CardFooter>
           </Card>
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
     </div>
   )
