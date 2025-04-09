@@ -96,7 +96,7 @@ export default function AddCustomer({ variant = "default" }) {
       // Programmatically close the drawer
       closeButtonRef.current?.click();
 
-      variant == "quickaction" ? router.push("/customers") : router.push("/customers");
+      variant === "quickaction" ? router.push("/customers") : router.push("/customers");
 
     } catch (error) {
       console.error("Error adding customer:", error);
