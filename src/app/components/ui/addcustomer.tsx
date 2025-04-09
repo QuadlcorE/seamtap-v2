@@ -25,7 +25,7 @@ import {
 import { getFamilies } from "@/lib/serverlogic";
 import { Family } from "@prisma/client";
 import { Loader2, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function AddCustomer({ variant = "default" }) {
   // State for forms
@@ -35,7 +35,7 @@ export default function AddCustomer({ variant = "default" }) {
     family_id: "",
   });
 
-  const router = useRouter();
+  // const router = useRouter();
 
   // State to store families
   const [families, setFamilies] = useState<Family[]>([]);
@@ -96,7 +96,7 @@ export default function AddCustomer({ variant = "default" }) {
       // Programmatically close the drawer
       closeButtonRef.current?.click();
 
-      variant === "quickaction" ? router.push("/customers") : router.push("/customers");
+      // variant === "quickaction" ? router.push("/customers") : router.push("/customers");
 
     } catch (error) {
       console.error("Error adding customer:", error);
