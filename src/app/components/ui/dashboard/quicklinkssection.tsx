@@ -22,7 +22,7 @@ export default function QuickLinks() {
             View All Customers <ChevronRight className="h-4 w-4" />
           </Link>
         </Button>
-        <Button
+        {/* <Button
           asChild
           variant="ghost"
           className="w-full justify-between"
@@ -45,7 +45,7 @@ export default function QuickLinks() {
             View All Measurements
             <ChevronRight className="h-4 w-4" />
           </Link>
-        </Button>
+        </Button> */}
       </CardContent>
     </Card>
   );

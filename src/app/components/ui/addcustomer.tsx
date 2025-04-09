@@ -94,9 +94,10 @@ export default function AddCustomer({ variant = "default" }) {
       setCustomerForm({ user_id: "", name: "", family_id: "" });
 
       // Programmatically close the drawer
-      // closeButtonRef.current?.click();
+      closeButtonRef.current?.click();
 
-      router.push('/dashboard');
+      variant == "quickaction" ? router.push("/customers") : router.push("/customers");
+
     } catch (error) {
       console.error("Error adding customer:", error);
       toast.error("Failed to add customer");

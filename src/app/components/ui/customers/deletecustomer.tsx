@@ -10,7 +10,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -20,7 +19,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { deleteCustomer } from "@/lib/serverlogic";
 import { toast } from "sonner";
@@ -30,11 +28,11 @@ export function DeleteCustomer({
   open,
   onOpenChange,
   customer_id,
-}: {
+}: Readonly<{
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   customer_id: number;
-}) {
+}>) {
   const [internalOpen, setInternalOpen] = React.useState(false);
 
   // Use external open state if provided, otherwise use internal state
@@ -46,6 +44,15 @@ export function DeleteCustomer({
 
   // States for handling deletion
   const [deleting, setDeleting] = React.useState<boolean>(false);
+  const [deleted, setDeleted] = React.useState<boolean>(false);
+
+  // Close the dialog or drawer when deletion is successful
+  React.useEffect(() => {
+    if (deleted) {
+      setOpen(false);
+      toast.success("Customer deleted successfully");
+    }
+  }, [deleted, setOpen]);
 
   // Delete customer
   const deleteCustomers = async () => {
@@ -56,6 +63,7 @@ export function DeleteCustomer({
         toast.error("Failed to delete data");
         throw new Error("Unable to delete Data");
       }
+      setDeleted(true);
     } catch (error) {
       console.error("Error loading families:", error);
       toast.error("Failed to load families");
@@ -67,16 +75,13 @@ export function DeleteCustomer({
   if (isDesktop) {
     return (
       <Dialog open={isOpen} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
-        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Delete Customer</DialogTitle>
             <DialogDescription>{str1}</DialogDescription>
           </DialogHeader>
           {/* <ProfileForm /> */}
-          <Button variant="destructive" onClick={deleteCustomers}>
+          <Button variant="destructive" onClick={deleteCustomers} disabled={deleting} >
             {deleting ? (
               <Loader2 className="animate-spin">Deleting</Loader2>
             ) : (
@@ -91,16 +96,13 @@ export function DeleteCustomer({
 
   return (
     <Drawer open={isOpen} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Delete Customer</DrawerTitle>
           <DrawerDescription>{str1}</DrawerDescription>
         </DrawerHeader>
         {/* <ProfileForm className="px-4" /> */}
-        <Button variant="destructive" onClick={deleteCustomers}>
+        <Button variant="destructive" onClick={deleteCustomers} disabled={deleting} >
           {deleting ? (
             <Loader2 className="animate-spin">Deleting</Loader2>
           ) : (
