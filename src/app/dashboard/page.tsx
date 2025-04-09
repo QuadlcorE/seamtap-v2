@@ -8,19 +8,8 @@ import QuickLinks from "../components/ui/dashboard/quicklinkssection";
 import AccountSummary from "../components/ui/dashboard/accountsummary";
 
 async function Dashboard() {
-  // Mock data (would come from your API in a real app)
   const user = await stackServerApp.getUser({or: 'redirect'});
-  // const user = {
-  //   name: "Alex Johnson",
-  //   email: "alex@example.com",
-  //   accountType: "Family",
-  // };
-
-  // const stats = {
-  //   customers: 124,
-  //   families: 42,
-  //   measurements: 567,
-  // };
+  
 
   return (
     <div className="p-6 space-y-6 max-w-6xl mx-auto">

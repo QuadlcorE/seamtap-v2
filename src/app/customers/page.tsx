@@ -47,10 +47,12 @@ export default function CustomersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] =
     useState<Customer[]>(customers);
+  const [familyfilter, setFamilyFilter] = useState<Customer[]>(customers);
 
   // State for drawer
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<number>(0);
+  const [refreshState, setRefreshState] = useState(false);
 
   // Fetch customers when the component mounts
   useEffect(() => {
@@ -78,27 +80,29 @@ export default function CustomersPage() {
       }
     };
     loadtable();
-  }, []);
+  }, [refreshState]);
 
-  // Fetch Customers by Family ID
-  const fetchCustomersByFamily = async (family_id: string) => {
-    setLoading(true);
-    try {
-      const customersData = await getCustomersByFamilyID(Number(family_id));
-
-      if (!customersData) {
-        toast.error("Failed to load customer data");
-        throw new Error("Failed to fetch customer Data");
-      }
-
-      setCustomers(customersData);
-    } catch (error) {
-      console.error("Error loading Customer Data:", error);
-      toast.error("Failed to load Customers");
-    } finally {
-      setLoading(false);
+  // Use useEffect to handle filtering when state changes
+  React.useEffect(() => {
+    if (selectedFamily !== "all") {
+      // Filter by both family and search term (if present)
+      const filtered = customers.filter(
+        (customer) =>
+          customer.family_id?.toString() === selectedFamily &&
+          (searchTerm === "" ||
+            customer.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+      setFilteredCustomers(filtered);
+    } else {
+      // Filter by search term only (if present)
+      const filtered = customers.filter(
+        (customer) =>
+          searchTerm === "" ||
+          customer.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCustomers(filtered);
     }
-  };
+  }, [selectedFamily, searchTerm, customers]);
 
   // Fetch all customers
   const fetchAllCustomers = async () => {
@@ -120,30 +124,17 @@ export default function CustomersPage() {
 
   // Handle Family selection
   const handleFamilyChange = (value: string) => {
-    const category = value;
-    setSelectedFamily(category);
-
-    // Only fetch if a category is selected
-    if (category) {
-      if (category == "all") {
-        fetchAllCustomers();
-        return;
-      }
-      fetchCustomersByFamily(category);
-    }
+    setSelectedFamily(value);
   };
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
+    setSearchTerm(e.target.value);
+  };
 
-    // Filter customers based on search term
-    const filtered = customers.filter((customer) =>
-      customer.name.toLowerCase().includes(value.toLowerCase())
-    );
-
-    setFilteredCustomers(filtered);
+  // Handle customer deletion
+  const handleCuustomerDelete = () => {
+    setRefreshState(!refreshState);
   };
 
   return (
@@ -281,28 +272,37 @@ export default function CustomersPage() {
         </CardContent>
       </Card>
       {/* Custom wrapper to control ViewCustomer's open state */}
-      <ViewCustomerWrapper
+      <DeleteCustomerWrapper
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         customer_id={selectedCustomer}
+        handleDeletion={handleCuustomerDelete}
       />
     </div>
   );
 }
 
-// Wrapper component to pass open state to ViewCustomer
-function ViewCustomerWrapper({
+// Wrapper component to pass open state to Delete Customer
+function DeleteCustomerWrapper({
   open,
   onOpenChange,
   customer_id,
+  handleDeletion,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   customer_id: number;
+  handleDeletion: () => void;
 }) {
   // Clone the ViewCustomer to inject open state
-  return React.cloneElement(<DeleteCustomer customer_id={customer_id} />, {
-    open,
-    onOpenChange,
-  });
+  return React.cloneElement(
+    <DeleteCustomer
+      customer_id={customer_id}
+      handleDeletion={handleDeletion}
+    />,
+    {
+      open,
+      onOpenChange,
+    }
+  );
 }

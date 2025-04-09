@@ -28,10 +28,12 @@ export function DeleteCustomer({
   open,
   onOpenChange,
   customer_id,
+  handleDeletion,
 }: Readonly<{
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   customer_id: number;
+  handleDeletion: () => void;
 }>) {
   const [internalOpen, setInternalOpen] = React.useState(false);
 
@@ -64,6 +66,7 @@ export function DeleteCustomer({
         throw new Error("Unable to delete Data");
       }
       setDeleted(true);
+      handleDeletion();
     } catch (error) {
       console.error("Error loading families:", error);
       toast.error("Failed to load families");
