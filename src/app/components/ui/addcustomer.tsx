@@ -23,7 +23,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getFamilies } from "@/lib/serverlogic";
-import { Family } from "@prisma/client";
+// import { Family } from "../../../../prisma/generated/client";
+// import { Family } from "@prisma/client";
+import { Family } from "../../../../prisma/generated/client";
 import { Loader2, Plus } from "lucide-react";
 
 

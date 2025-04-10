@@ -27,7 +27,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Search, Loader2 } from "lucide-react";
 import AddCustomer from "../components/ui/addcustomer";
-import { Customer, Family } from "@prisma/client";
+// import { Customer, Family } from "../../../prisma/generated/client";
+// import { Customer, Family } from "@prisma/client";
+import { Customer, Family } from "../../../prisma/generated/client";
 import {
   getCustomers,
   getFamilies,
