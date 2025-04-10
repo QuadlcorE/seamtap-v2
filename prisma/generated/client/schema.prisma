@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+model Family {
+  family_id   Int        @id @default(autoincrement())
+  user_id     String // Reference Stack Auth's user_id
+  family_name String
+  created_at  DateTime   @default(now())
+  customers   Customer[]
+}
+
+model Customer {
+  customer_id  Int           @id @default(autoincrement())
+  user_id      String // Reference Stack Auth's user_id
+  family_id    Int?
+  name         String
+  created_at   DateTime      @default(now())
+  family       Family?       @relation(fields: [family_id], references: [family_id])
+  measurements Measurement[]
+}
+
+model Measurement {
+  measurement_id Int      @id @default(autoincrement())
+  customer_id    Int
+  chest          Float?
+  waist          Float?
+  hips           Float?
+  inseam         Float?
+  notes          String?
+  created_at     DateTime @default(now())
+  customer       Customer @relation(fields: [customer_id], references: [customer_id])
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
