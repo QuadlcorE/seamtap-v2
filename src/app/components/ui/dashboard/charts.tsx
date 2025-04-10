@@ -5,6 +5,7 @@ import { PieChart, BarChart3 } from "lucide-react";
 export default function Charts() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* TODO: Fix charts */}
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">Customers by Family</CardTitle>

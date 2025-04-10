@@ -30,10 +30,9 @@ import AddCustomer from "../components/ui/addcustomer";
 import { Customer, Family } from "@prisma/client";
 import {
   getCustomers,
-  getCustomersByFamilyID,
   getFamilies,
 } from "@/lib/serverlogic";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { DeleteCustomer } from "../components/ui/customers/deletecustomer";
 import Link from "next/link";
 
@@ -47,7 +46,6 @@ export default function CustomersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] =
     useState<Customer[]>(customers);
-  const [familyfilter, setFamilyFilter] = useState<Customer[]>(customers);
 
   // State for drawer
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -105,22 +103,22 @@ export default function CustomersPage() {
   }, [selectedFamily, searchTerm, customers]);
 
   // Fetch all customers
-  const fetchAllCustomers = async () => {
-    setLoading(true);
-    try {
-      const customerData = await getCustomers();
-      if (!customerData) {
-        toast.error("Failed to load customer data");
-        throw new Error("Failed to fetch customer Data");
-      }
-      setCustomers(customerData);
-    } catch (error) {
-      console.error("Error loading Customer Data:", error);
-      toast.error("Failed to load Customers");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchAllCustomers = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const customerData = await getCustomers();
+  //     if (!customerData) {
+  //       toast.error("Failed to load customer data");
+  //       throw new Error("Failed to fetch customer Data");
+  //     }
+  //     setCustomers(customerData);
+  //   } catch (error) {
+  //     console.error("Error loading Customer Data:", error);
+  //     toast.error("Failed to load Customers");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Handle Family selection
   const handleFamilyChange = (value: string) => {
@@ -190,7 +188,7 @@ export default function CustomersPage() {
                 </SelectContent>
               </Select>
 
-              <Select>
+              {/* <Select>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Date Created" />
                 </SelectTrigger>
@@ -200,7 +198,7 @@ export default function CustomersPage() {
                   <SelectItem value="30days">Last 30 Days</SelectItem>
                   <SelectItem value="90days">Last 90 Days</SelectItem>
                 </SelectContent>
-              </Select>
+              </Select> */}
             </div>
           </div>
 
@@ -271,6 +269,7 @@ export default function CustomersPage() {
           )}
         </CardContent>
       </Card>
+      <Toaster />
       {/* Custom wrapper to control ViewCustomer's open state */}
       <DeleteCustomerWrapper
         open={isDialogOpen}

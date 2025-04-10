@@ -112,7 +112,7 @@ const CustomerDetailsPage = ({ customer }: { customer: CustomerProps }) => {
               All recorded measurements for this customer
             </CardDescription>
           </div>
-          <AddMeasurement />
+          <AddMeasurement variant="customer"/>
         </CardHeader>
         <CardContent>
           <Table>

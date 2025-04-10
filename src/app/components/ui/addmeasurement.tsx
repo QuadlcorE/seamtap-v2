@@ -139,14 +139,14 @@ export default function AddMeasurement({ variant = "default" }) {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        {variant == "quickaction" ? (
-          <Button className="w-full justify-start" variant="outline" size="sm">
-            Record Measurement
-          </Button>
-        ) : (
+        {variant == "customer" ? (
           <Button size="sm" className="flex items-center gap-1">
             <Plus className="h-4 w-4" />
             Add measurement
+          </Button>
+        ) : (
+          <Button className="w-full justify-start" variant="outline" size="sm">
+            Record Measurement
           </Button>
         )}
       </DrawerTrigger>
